@@ -1,0 +1,23 @@
+#home pure-button{
+    --pure-button-primary-bg: var(--primary-color);
+    --pure-button-primary-bg-hover: var(--primary-color-hover);
+}
+#home pure-input{
+    --pure-input-focus: var(--primary-color, #FFF);
+    --color-input-bg: var(--color-white);
+    --color-input-text: var(--color-black, #FFF)
+}
+.dark #home pure-input{
+    --pure-input-focus: var(--primary-color, #FFF);
+    --color-input-bg: var(--color-gray-bg);
+    --color-input-text: var(--color-white, #FFF)
+}
+#home pure-copy{
+    --pure-copy-bg: var(--primary-color);
+    --pure-copy-bg-hover: var(--primary-color-hover);
+    
+}
+.dark #home pure-copy{
+    --pure-input-bg: var(--color-gray-bg);
+    --pure-input-color: var(--color-white);
+}

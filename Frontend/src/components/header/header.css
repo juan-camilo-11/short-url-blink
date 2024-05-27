@@ -1,0 +1,5 @@
+#header ul button:hover path,
+#header ul a:hover path{
+    fill: var(--primary-color);
+    transition: .3s ease;
+}
