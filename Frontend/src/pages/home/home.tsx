@@ -33,10 +33,10 @@ function Home() {
     }, [currentStep]);
 
     return (
-        <section id='home' className='flex flex-col justify-center items-center h-full gap-12'>
-            <div className='flex flex-col justify-center items-start gap-3 md:items-center transition duration-300 ease-in-out'>
+        <section id='home' className='flex flex-col justify-center items-center h-full gap-8'>
+            <div className='flex flex-col justify-center items-start gap-5 md:items-center transition duration-300 ease-in-out'>
                 <h1 className='text-gray-900 dark:text-white text-5xl'>Atajos simples para viajes rápidos.</h1>
-                <p className='text-gray-800 dark:text-white max-w-xl text-center'>Simplifica la forma en que compartes enlaces en línea con nuestra herramienta de acortamiento de URLs, rápida y fácil de usar.</p>
+                <p className='text-gray-800 dark:text-white max-w-xl md:text-center'>Simplifica la forma en que compartes enlaces en línea con nuestra herramienta de acortamiento de URLs, rápida y fácil de usar.</p>
             </div>
             <div className='flex flex-col justify-center items-center gap-2 w-full'>
                 {currentStep === steps.Initial && (
@@ -58,7 +58,7 @@ function Home() {
                 {currentStep === steps.Finish && (
                     <div className='w-11/12 md:w-3/4 flex flex-col gap-3'>
                         <pure-copy></pure-copy>
-                        <p className='text-gray-700 dark:text-white text-sm'>Este link no ha sido generado, solo es una prueba, <a href="" className='underline'>Empieza aquí.</a></p>
+                        <p className='text-gray-700 dark:text-white text-sm'>Este link no ha sido generado, solo es una prueba.</p>
                     </div>
                 )}
             </div>

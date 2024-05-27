@@ -7,7 +7,7 @@ import "./index.css";
 
 function App() {
   return (
-    <Router>
+    <Router basename='/short-url-blink'>
       <Layout>
         <Routes>
           <Route path="/" element={<Home/>} />
