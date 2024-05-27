@@ -11,28 +11,14 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Print current directory
-        run: pwd
-
-      - name: List files in current directory
-        run: ls -la
-
-      - name: Change to frontend directory
+      - name: Change to frontend directory and npm install and run build commands
         run: |
           cd Frontend || { echo "Failed to change directory"; exit 1; }
-          pwd
-
-      - name: List files in frontend directory
-        run: ls -la
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install and Build 🔧
-        run: npm run build
+          npm install
+          npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_PAGES_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./Frontend/build
