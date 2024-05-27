@@ -58,7 +58,7 @@ function Home() {
                 {currentStep === steps.Finish && (
                     <div className='w-11/12 md:w-3/4 flex flex-col gap-3'>
                         <pure-copy></pure-copy>
-                        <p className='text-gray-700 dark:text-white text-sm'>Este link no ha sido generado, solo es una prueba, <a href="#" className='underline'>Empieza aquí.</a></p>
+                        <p className='text-gray-700 dark:text-white text-sm'>Este link no ha sido generado, solo es una prueba.</p>
                     </div>
                 )}
             </div>
