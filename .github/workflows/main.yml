@@ -11,8 +11,14 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
+      - name: List files in current directory
+        run: ls -la
+
       - name: Change to frontend directory
         run: cd Frontend
+
+      - name: List files in frontend directory
+        run: ls -la
 
       - name: Install dependencies
         run: npm install
