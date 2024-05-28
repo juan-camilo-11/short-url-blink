@@ -5,6 +5,7 @@
 :root{
     --primary-color: #9e0054;
     --primary-color-hover: #660036;
+    --primary-color-hover-trasparent: #6600363a;
     --color-white: #FFF;
     --color-black: #000;
     --color-gray-bg: #262626;
