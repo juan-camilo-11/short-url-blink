@@ -1,7 +1,6 @@
+import "./src/auth/auth-google";
 import express from 'express';
 import passport from 'passport';
-import session from 'express-session';
-import "./src/auth/auth-google";
 import authRoutes from "./src/routes/auth/auth";
 import userRoutes from "./src/routes/user/user";
 import { client } from "./src/db/connection";
@@ -19,30 +18,24 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false
-}));
-
 app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('/', (req, res) => {
-  res.send("Hola mundo")
-});
 
 app.use(authRoutes);
 
-function isAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.status(401).json({ error: 'Unauthenticated user' });
-}
+const authenticateJWT = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized access' });
+    }
+    req.user = user;
+    next();
+  })(req, res, next);
+};
 
-app.use(isAuth);
-app.use(userRoutes);
+app.use(userRoutes, authenticateJWT);
 
 process.on('SIGINT', async () => {
   await client.close();
