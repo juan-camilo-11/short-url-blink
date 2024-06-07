@@ -2,6 +2,9 @@ import { registerUser } from "../db/register/user.register";
 import { validateRegisteredUser } from "../db/validate/validateRegisteredUser";
 import User from "../models/user.model";
 import dotenv from 'dotenv';
+import jwt from "jsonwebtoken";
+import { jwtOptions } from "./StrategyJWT";
+
 dotenv.config();
 
 const passport = require('passport');
@@ -17,10 +20,11 @@ passport.use(new GoogleStrategy({
       const user = new User(profile.id, profile.displayName, profile.emails[0].value);
       const userRegister = await validateRegisteredUser(user.getGoogleId());
       if (!userRegister) registerUser(user);
+      const tokenJWT = jwt.sign({ googleId: profile.id }, jwtOptions.secretOrKey);
+      return done(null, tokenJWT);
     } catch (err) {
       throw err;
     }
-    return done(null, profile);
   }
 ));
 
