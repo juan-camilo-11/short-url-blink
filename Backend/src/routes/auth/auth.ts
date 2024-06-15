@@ -8,9 +8,10 @@ router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: `${process.env.APP_URL_FRONTEND}/short-url-blink/error`, session: false }),
     function (req, res) {
         res
-            .cookie('jwt', req.user)
+            .cookie('jwt', req.user, { httpOnly: true })
             .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/dashboard`);
-    });
+    }
+);
 
 router.get('/auth/logout', (req, res) => {
     req.logout(() => {

@@ -9,19 +9,22 @@ dotenv.config();
 
 router.get('/profile', async (req, res) => {
 
-    try{
-        const tokenJWT = req.headers.authorization;
+    try {
+        const tokenJWT = req.headers.cookie?.split('; ')
+            .find(cookie => cookie.startsWith('jwt='))
+            ?.split('=')[1];
+
         const decodedToken = jwt.verify(tokenJWT, process.env.JWT_SECRET);
-        
+
         const googleId = decodedToken.googleId;
-        
+
         const user = await findUser(googleId);
 
-        if(!user){
+        if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json({user: user})
-    }catch(err){
+        res.status(200).json({ user: user })
+    } catch (err) {
         throw err;
     }
 });
