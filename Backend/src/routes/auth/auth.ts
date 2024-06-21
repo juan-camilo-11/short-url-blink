@@ -13,11 +13,4 @@ router.get('/auth/google/callback',
     }
 );
 
-router.get('/auth/logout', (req, res) => {
-    req.logout(() => {
-        res.status(200).json('Closed session');
-    });
-});
-
-
 export default router;

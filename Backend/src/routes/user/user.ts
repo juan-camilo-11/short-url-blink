@@ -29,4 +29,9 @@ router.get('/profile', async (req, res) => {
     }
 });
 
+router.get('/profile/logout', (req, res) => {
+    res.clearCookie("jwt");
+    res.end();
+});
+
 export default router;
