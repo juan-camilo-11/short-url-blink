@@ -13,5 +13,6 @@ declare namespace JSX {
       'pure-tag': any;
       'pure-toggle': any;
       'pure-copy': any;
+      'pure-expand': any;
     }
   }

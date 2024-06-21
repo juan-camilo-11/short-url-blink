@@ -5,6 +5,8 @@ import Home from './pages/home/home';
 import "pure-ui-web-components";
 import "./index.css";
 import Auth from './pages/auth/auth';
+import Dashboard from './pages/dashboard/dashboard';
+import Logout from './pages/auth/logout';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/auth" element={<Auth/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/logout" element={<Logout/>} />
         </Routes>
       </Layout>
     </Router>
