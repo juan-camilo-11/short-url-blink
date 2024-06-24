@@ -14,6 +14,9 @@
     fill: var(--primary-color);
     transition: .3s ease;
 }
+pure-expand{
+    display: flex;
+}
 #pure-expand{
     position: relative;
 }

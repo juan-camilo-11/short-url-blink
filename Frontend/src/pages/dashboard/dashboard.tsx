@@ -4,28 +4,28 @@ import Grip from '../../components/grip/grip';
 
 function Dashboard() {
     const [userState, setUserState] = useState(localStorage.getItem("user"));
+
     useEffect(()=>{
         if(userState === null){
+            fetchUser();
             setTimeout(() => {
                 window.location.reload();
             }, 300); 
         }
         
     },[])
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const user = await handleUser();
-                if (user) {
-                    const userJSON = JSON.stringify(user);
-                    localStorage.setItem('user', userJSON);
-                }
-            } catch (err) {
-                throw new Error('Err:');
-            };
-        }
-        fetchUser();
-    }, [])
+
+    const fetchUser = async () => {
+        try {
+            const user = await handleUser();
+            if (user) {
+                const userJSON = JSON.stringify(user);
+                localStorage.setItem('user', userJSON);
+            }
+        } catch (err) {
+            throw new Error('Err:');
+        };
+    }
 
     const handleUser = async () => {
         try {
@@ -42,6 +42,7 @@ function Dashboard() {
 
     return (
         <section id='dashboard'>
+            <Grip></Grip>
         </section>
     );
 }
