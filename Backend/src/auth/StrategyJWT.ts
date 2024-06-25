@@ -1,6 +1,6 @@
 import passport from 'passport';
-import { validateRegisteredUser } from '../db/validate/validateRegisteredUser';
 import dotenv from 'dotenv';
+import User from '../models/user';
 
 dotenv.config();
 
@@ -12,11 +12,13 @@ export const jwtOptions = {
   secretOrKey: process.env.JWT_SECRET
 };
 
-passport.use(new JwtStrategy(jwtOptions, (payload, done) => {
-  const user = validateRegisteredUser(payload.sub);
+passport.use(new JwtStrategy(jwtOptions, async (payload, done) => {
+  const user = await User.findByGoogleId(payload.googleId);
   if (user) {
     return done(null, user);
   } else {
     return done(null, false);
   }
 }));
+
+export default passport;

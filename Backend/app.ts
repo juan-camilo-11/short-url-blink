@@ -3,9 +3,9 @@ import express from 'express';
 import passport from 'passport';
 import authRoutes from "./src/routes/auth/auth";
 import userRoutes from "./src/routes/user/user";
-import { client } from "./src/db/connection";
 import cors from "cors";
 import dotenv from 'dotenv';
+import db from './src/models/db';
 
 dotenv.config();
 
@@ -18,28 +18,33 @@ app.use(cors({
   credentials: true
 }));
 
+async function connectDB() {
+  try {
+    await db.connect();
+    console.log('Application started!');
+  } catch (error) {
+    console.error('Error starting application:', error);
+    process.exit(1);
+  }
+}
+
+connectDB();
+
 app.use(passport.initialize());
 
 app.use(authRoutes);
 
-const authenticateJWT = (req, res, next) => {
-  passport.authenticate('jwt', { session: false }, (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.status(401).json({ message: 'Unauthorized access' });
-    }
-    req.user = user;
-    next();
-  })(req, res, next);
-};
-
-app.use(userRoutes, authenticateJWT);
+app.use(userRoutes);
 
 process.on('SIGINT', async () => {
-  await client.close();
-  process.exit(0);
+  try {
+    await db.close();
+    console.log('Application Closed!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error closing application:', error);
+    process.exit(0);
+  }
 });
 
 export default app;

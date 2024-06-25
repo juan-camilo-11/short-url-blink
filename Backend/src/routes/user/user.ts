@@ -1,25 +1,14 @@
 import { Router } from 'express';
-import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
-import { findUser } from '../../db/queries/findUser';
+import passport from '../../auth/StrategyJWT';
 
 const router = Router();
 
 dotenv.config();
 
-router.get('/profile', async (req, res) => {
-
+router.get('/profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        const tokenJWT = req.headers.cookie?.split('; ')
-            .find(cookie => cookie.startsWith('jwt='))
-            ?.split('=')[1];
-
-        const decodedToken = jwt.verify(tokenJWT, process.env.JWT_SECRET);
-
-        const googleId = decodedToken.googleId;
-
-        const user = await findUser(googleId);
-
+        const user = req.user
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
