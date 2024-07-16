@@ -1,3 +1,6 @@
+import { ObjectId } from 'mongodb';
+import db from './db';
+
 class User {
   private googleId: string;
   private displayName: string;
@@ -32,6 +35,31 @@ class User {
   setEmail(email: string): void {
     this.email = email;
   }
+
+  //
+  static async findByGoogleId(id: string) {
+    const client = db.getClient();
+    const database = client.db("db");
+    const collection = database.collection("users");
+
+    const user = await collection.findOne({ googleId: id });
+
+    return user;
+  }
+  async create(user: User) {
+    const client = db.getClient();
+    const database = client.db("db");
+    const collection = database.collection("users");
+
+    try{
+      await collection.insertOne(user);
+    }
+    catch(err){
+      throw err;
+    }
+
+  }
 }
+
 
 export default User;

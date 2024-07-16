@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "./home.css";
+import { generateShortUrl } from '../../utils/generateShortUrl';
 
 const steps = {
     Initial: 'initial',
@@ -10,13 +11,19 @@ const steps = {
 
 function Home() {
     const [currentStep, setCurrentStep] = useState(steps.Initial);
+    const [shortUrl, setShortUrl] = useState("");
+    const linkRef = useRef('');
 
-    const handlePureClick = () => {
+    const handleInputChange = (event: any) => {
+        linkRef.current = event.detail.value;
+    };
+
+    const handlePureClick = async () => {
         if (currentStep === steps.Initial) {
             setCurrentStep(steps.WriteLink)
         } else if (currentStep === steps.WriteLink) {
-            setCurrentStep(steps.GenerateLink)
-        } else if (currentStep === steps.GenerateLink) {
+            const shortUrl = await generateShortUrl();
+            setShortUrl(shortUrl);
             setCurrentStep(steps.Finish)
         } else {
             setCurrentStep(steps.Initial)
@@ -26,9 +33,12 @@ function Home() {
     useEffect(() => {
         const pureButton = document.querySelector("pure-button");
         pureButton?.addEventListener("onPureClick", handlePureClick);
+        const pureInput = document.querySelector("pure-input");
+        pureInput?.addEventListener("onPureChange", handleInputChange);
 
         return () => {
             pureButton?.removeEventListener("onPureClick", handlePureClick);
+            pureInput?.removeEventListener("onPureChange", handleInputChange);
         };
     }, [currentStep]);
 
@@ -57,7 +67,7 @@ function Home() {
                 )}
                 {currentStep === steps.Finish && (
                     <div className='w-11/12 md:w-3/4 flex flex-col gap-3'>
-                        <pure-copy></pure-copy>
+                        <pure-copy text={`${process.env.REACT_APP_BASE_URL}/${shortUrl}`}></pure-copy>
                         <p className='text-gray-700 dark:text-white text-sm'>Este link no ha sido generado, solo es una prueba.</p>
                     </div>
                 )}

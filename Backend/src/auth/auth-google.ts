@@ -1,6 +1,4 @@
-import { registerUser } from "../db/register/user.register";
-import { validateRegisteredUser } from "../db/validate/validateRegisteredUser";
-import User from "../models/user.model";
+import User from "../models/user";
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
 import { jwtOptions } from "./StrategyJWT";
@@ -18,8 +16,8 @@ passport.use(new GoogleStrategy({
   async function (accessToken, refreshToken, profile, done) {
     try {
       const user = new User(profile.id, profile.displayName, profile.emails[0].value);
-      const userRegister = await validateRegisteredUser(user.getGoogleId());
-      if (!userRegister) registerUser(user);
+      const userRegister = await User.findByGoogleId(user.getGoogleId());
+      if (!userRegister) await user.create(user);
       const tokenJWT = jwt.sign({ googleId: profile.id }, jwtOptions.secretOrKey);
       return done(null, tokenJWT);
     } catch (err) {

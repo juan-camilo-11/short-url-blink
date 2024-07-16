@@ -1,0 +1,64 @@
+[
+    {
+        "id": "111",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "http://localhost:3000/short-url-blink/33",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "red"
+    },
+    {
+        "id": "12",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "http://localhost:3000/short-url-blink/34",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "blue"
+    },
+    {
+        "id": "123",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "http://localhost:3000/short-url-blink/35",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "blue"
+    },{
+        "id": "111",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "short",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "red"
+    },
+    {
+        "id": "111",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "http://localhost:3000/short-url-blink/33",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "red"
+    },
+    {
+        "id": "12",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "http://localhost:3000/short-url-blink/34",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "blue"
+    },
+    {
+        "id": "123",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "http://localhost:3000/short-url-blink/35",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "blue"
+    },{
+        "id": "111",
+        "url":"http://localhost:3000/short-url-blink/dashboard",
+        "short": "short",
+        "clicks": 0,
+        "date": "27/02",
+        "color": "red"
+    }
+]

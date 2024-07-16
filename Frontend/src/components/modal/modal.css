@@ -1,0 +1,6 @@
+.footer button{
+    background-color: var(--primary-color);
+}
+.footer button:hover{
+    background-color: var(--primary-color-hover);
+}

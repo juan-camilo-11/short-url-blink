@@ -3,3 +3,25 @@
     fill: var(--primary-color);
     transition: .3s ease;
 }
+#header ul div:hover path{
+    fill: var(--primary-color);
+    transition: .3s ease;
+}
+.dark #header ul div path{
+    fill: var(--color-white);
+}
+.dark #header ul div:hover path{
+    fill: var(--primary-color);
+    transition: .3s ease;
+}
+pure-expand{
+    display: flex;
+}
+#pure-expand{
+    position: relative;
+}
+.dark pure-expand {
+    --pure--expand-border-color: var(--color-white);
+    --pure--expand-text-color: var(--color-white);
+    --pure--expand-bg-color: var(--color-gray-bg-dark)
+} 
