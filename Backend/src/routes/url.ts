@@ -9,7 +9,7 @@ router.get('/url/:id', UrlController.getUrlById);
 
 router.post('/url', UrlController.createUrl);
 
-router.delete('/url/:id', UrlController.deleteUrl);
+router.delete('/url', UrlController.deleteUrl);
 
 router.patch('/url', UrlController.updateUrl);
 

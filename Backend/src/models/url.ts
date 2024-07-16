@@ -44,8 +44,6 @@ class Url {
         const database = client.db("db");
         const collection = database.collection("urls");
 
-        console.log("_ID:",id)
-
         const updatedUrl = await collection.findOneAndUpdate(
             { _id: new ObjectId(id) },
             { $set: newUrl },
@@ -72,8 +70,19 @@ class Url {
             throw err;
         }
     }
-    
-    static async isValidUrl(url: string){
+
+    static async deleteById(id: string) {
+        const client = db.getClient();
+        const database = client.db("db");
+        const collection = database.collection("urls");
+
+        const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+        return result.acknowledged && result.deletedCount > 0;;
+    }
+
+
+    static async isValidUrl(url: string) {
         if (!url || typeof url !== 'string') {
             return false;
         }
@@ -88,7 +97,7 @@ class Url {
 
         const existing = await collection.findOne({ shortUrl: shortUrl });
 
-        if(existing){
+        if (existing) {
             return true;
         }
 
@@ -106,7 +115,6 @@ class Url {
         const existingUrl = await this.validateShortUrlIsUnique(randomId);
 
         if (existingUrl) {
-            console.log("Existe y se volvio a llamar")
             return await Url.generateShortUrl();
         }
 

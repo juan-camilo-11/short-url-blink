@@ -16,7 +16,6 @@ export class UrlController {
     static async getUrlById(req, res) {
         try {
             const { id } = req.params;
-            console.log("-id", id)
 
             const url = await Url.findById(id);
 
@@ -38,7 +37,9 @@ export class UrlController {
                 return res.status(400).json({ error: 'Faltas datos en la peticion' });
             }
 
-            if (!Url.isValidUrl(url)) {
+            const isValid = await Url.isValidUrl(url);
+
+            if (!isValid) {
                 return res.status(400).json({ error: 'La URL proporcionada no es válida' });
             }
 
@@ -55,6 +56,19 @@ export class UrlController {
         }
     }
     static async deleteUrl(req, res) {
+        try {
+            const id = req.headers['x-url-id'];
+
+            const deleteUrl = await Url.deleteById(id);
+
+            if (!deleteUrl) {
+                return res.status(404).json({ message: 'No se encontro el documento' });
+            }
+
+            res.json(deleteUrl);
+        } catch (error) {
+            res.status(500).json({ message: 'Error al eliminar la url', error });
+        }
     }
     static async updateUrl(req, res) {
         try {
@@ -62,8 +76,6 @@ export class UrlController {
             const { url, status, shortUrl, googleId, date, clicks } = req.body;
 
             const newUrl = new Url(googleId, status, url, shortUrl, clicks, date);
-
-            console.log("Weq", newUrl)
 
             const updatedUrl = await Url.findByIdAndUpdate(id, newUrl);
 
