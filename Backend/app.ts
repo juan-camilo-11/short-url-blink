@@ -1,22 +1,17 @@
 import "./src/auth/auth-google";
 import express from 'express';
 import passport from 'passport';
-import authRoutes from "./src/routes/auth/auth";
-import userRoutes from "./src/routes/user/user";
-import cors from "cors";
-import dotenv from 'dotenv';
+import authRoutes from "./src/routes/auth";
+import userRoutes from "./src/routes/user";
+import urlRoutes from "./src/routes/url";
 import db from './src/models/db';
-
-dotenv.config();
+import { corsMiddleware } from "./src/middlewares/cors";
+import { authMiddleware } from "./src/middlewares/auth";
 
 const app = express();
 app.use(express.json());
 
-app.use(cors({
-  origin: `${process.env.APP_URL_FRONTEND}`,
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+app.use(corsMiddleware());
 
 async function connectDB() {
   try {
@@ -35,6 +30,10 @@ app.use(passport.initialize());
 app.use(authRoutes);
 
 app.use(userRoutes);
+
+app.use(authMiddleware());
+
+app.use(urlRoutes);
 
 process.on('SIGINT', async () => {
   try {

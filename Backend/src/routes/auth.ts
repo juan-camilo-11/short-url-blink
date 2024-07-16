@@ -9,7 +9,7 @@ router.get('/auth/google/callback',
     function (req, res) {
         res
             .cookie('jwt', req.user, { httpOnly: false })
-            .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/dashboard`);
+            .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/auth`);
     }
 );
 
