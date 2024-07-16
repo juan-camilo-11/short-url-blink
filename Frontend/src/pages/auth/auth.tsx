@@ -2,6 +2,10 @@ import { useEffect } from "react";
 import { Get } from "../../service/http";
 
 function Auth() {
+    setTimeout(() => {
+        alert("¡Temporizador de 5 segundos terminado!");
+    }, 5000);
+
     const handleLogin = () => {
         window.location.href = `${process.env.REACT_APP_BASE_URL_BACKEND}/auth/google`;
     }
@@ -22,6 +26,7 @@ function Auth() {
         try {
             const user = await Get(`${process.env.REACT_APP_BASE_URL_BACKEND}/profile`);
             if (user) {
+                console.log("user", user)
                 sessionStorage.setItem('user', JSON.stringify(user));
                 window.location.href = `${process.env.REACT_APP_BASE_URL}/dashboard`;
             }
@@ -35,6 +40,9 @@ function Auth() {
         const existingToken = checkJwtCookieExistence('jwt');
         if (existingToken && !existingUser) {
             fetchUser();
+        }
+        else{
+            console.log("No existe token")
         }
     }, [])
 
