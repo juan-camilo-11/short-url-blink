@@ -3,7 +3,7 @@ import { Get } from "../../service/http";
 
 function Auth() {
     const handleLogin = () => {
-        window.location.href = 'http://localhost:3001/auth/google';
+        window.location.href = `${process.env.REACT_APP_BASE_URL_BACKEND}/auth/google`;
     }
 
     function checkJwtCookieExistence(cookieName: string) {
@@ -20,10 +20,10 @@ function Auth() {
 
     const fetchUser = async () => {
         try {
-            const user = await Get('http://localhost:3001/profile');
+            const user = await Get(`${process.env.REACT_APP_BASE_URL_BACKEND}/profile`);
             if (user) {
                 sessionStorage.setItem('user', JSON.stringify(user));
-                window.location.href = 'http://localhost:3000/short-url-blink/dashboard';
+                window.location.href = `${process.env.REACT_APP_BASE_URL}/dashboard`;
             }
         } catch (error) {
             console.error('Error al obtener usuario:', error);
