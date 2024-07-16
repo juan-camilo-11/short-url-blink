@@ -14,7 +14,7 @@ interface ModalData {
 }
 
 function Dashboard() {
-    const [userState, setUserState] = useState(() => {
+    const [userState] = useState(() => {
         const storedUser = sessionStorage.getItem('user');
         return storedUser ? JSON.parse(storedUser) : null;
     });
