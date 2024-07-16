@@ -86,7 +86,7 @@ class Url {
         if (!url || typeof url !== 'string') {
             return false;
         }
-        const urlPattern = /^(http:\/\/www\.|https:\/\/www\.|ftp:\/\/www\.|www\.){1}([0-9A-Za-z]+\.)$/;
+        const urlPattern = /^(https?:\/\/|ftp:\/\/|www\.)[^\s/$.?#].[^\s]*$/i;
         return urlPattern.test(url);
     }
 
