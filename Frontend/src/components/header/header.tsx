@@ -2,18 +2,29 @@ import { useEffect, useState } from 'react';
 import "./header.css";
 
 function Header() {
-    const [userState, setUserState] = useState(localStorage.getItem("user"));
-    let userObj;
+    const [userState, setUserState] = useState(() => {
+        const storedUser = sessionStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
 
-    if (userState !== null) {
-        const user: string = userState;
-        try {
-            const userStateObj = JSON.parse(user);
-            userObj = userStateObj.user;
-        } catch (err) {
-            throw err
-        }
-    }
+    const [sessionStorageUpdated, setSessionStorageUpdated] = useState(false);
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setSessionStorageUpdated(prev => !prev);
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
+
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem('user');
+        setUserState(storedUser ? JSON.parse(storedUser) : null);
+    }, [sessionStorageUpdated]);
 
     const [theme, setTheme] = useState(() => {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -47,11 +58,11 @@ function Header() {
                         :
                         <button onClick={HandleTheme} className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512" className='fill-neutral-900 dark:fill-slate-100'><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z" /></svg></button>
                     }
-                    {userState === null
+                    {!userState
                         ? <a href="/short-url-blink/auth"><svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512" className='fill-neutral-900 dark:fill-slate-100 '><path d="M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" /></svg></a>
                         : <div id='pure-expand' className='flex items-center justify-center'><pure-expand
-                            optionsTitle={userObj.displayName}
-                            optionsSubtitle={userObj.email}
+                            optionsTitle={userState.user.displayName}
+                            optionsSubtitle={userState.user.email}
                             options='[{"text":"Home","to":"/short-url-blink/"},{"text":"Dashboard","to":"/short-url-blink/dashboard"}]'
                             optionsFooter='{"text":"Cerrar Sesion", "to": "/short-url-blink/logout"}'
                             position="right">

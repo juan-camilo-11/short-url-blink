@@ -7,6 +7,7 @@ import "./index.css";
 import Auth from './pages/auth/auth';
 import Dashboard from './pages/dashboard/dashboard';
 import Logout from './pages/auth/logout';
+import Redirect from './pages/redirect/redirect';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/auth" element={<Auth/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/logout" element={<Logout/>} />
+          <Route path="*" element={<Redirect/>} />
         </Routes>
       </Layout>
     </Router>

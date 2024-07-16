@@ -1,7 +1,42 @@
+import { useEffect } from "react";
+import { Get } from "../../service/http";
+
 function Auth() {
     const handleLogin = () => {
         window.location.href = 'http://localhost:3001/auth/google';
     }
+
+    function checkJwtCookieExistence(cookieName: string) {
+        const cookies = document.cookie.split(';');
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(cookieName + '=')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const fetchUser = async () => {
+        try {
+            const user = await Get('http://localhost:3001/profile');
+            if (user) {
+                sessionStorage.setItem('user', JSON.stringify(user));
+                window.location.href = 'http://localhost:3000/short-url-blink/dashboard';
+            }
+        } catch (error) {
+            console.error('Error al obtener usuario:', error);
+        }
+    };
+
+    useEffect(() => {
+        const existingUser = sessionStorage.getItem('user') ? true : false;
+        const existingToken = checkJwtCookieExistence('jwt');
+        if (existingToken && !existingUser) {
+            fetchUser();
+        }
+    }, [])
 
     return (
         <section id='auth' className='flex flex-col justify-center items-center h-full gap-8'>

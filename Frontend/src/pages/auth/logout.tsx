@@ -7,13 +7,13 @@ function Logout() {
     }, [])
 
     const deleteUser = () => {
-        if(localStorage.getItem('user')){
-            localStorage.removeItem('user');
+        if(sessionStorage.getItem('user')){
+            sessionStorage.removeItem('user');
         }
     }
 
     function logout() {
-        fetch('http://localhost:3001/profile/logout', {
+        fetch(`${process.env.REACT_APP_BASE_URL_BACKEND}/profile/logout`, {
             method: 'GET',
             credentials: 'include'
         })

@@ -1,0 +1,25 @@
+table td button{
+    color: var(--primary-color);
+}
+
+#modal form button{
+    background-color: var(--primary-color);
+}
+
+#modal form .secondary{
+    border: 1px solid var(--primary-color);
+    background-color: var(--color-white);
+    color: var(--primary-color);
+}
+#modal form button:hover{
+    background-color: var(--primary-color-hover);
+}
+
+#modal form .secondary:hover{
+    background-color: var(--primary-color-hover-trasparent);
+}
+.dark #modal form .secondary{
+    border: 1px solid var(--primary-color);
+    background-color: var(--color-gray-bg);
+    color: var(--primary-color);
+}
