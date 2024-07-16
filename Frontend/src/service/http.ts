@@ -28,7 +28,7 @@ export async function Get(pathUrl: string, options: RequestInit = {}) {
         };
 
         // Espera 10 segundos antes de continuar
-        await wait(50000);
+        await wait(10000);
 
         const defaultHeaders = {
             'Authorization': `Bearer ${getCookie('jwt')}`,
