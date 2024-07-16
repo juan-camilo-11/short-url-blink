@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import { Get } from "../../service/http";
 
 function Auth() {
-    setTimeout(() => {
-        alert("¡Temporizador de 5 segundos terminado!");
-    }, 5000);
-
     const handleLogin = () => {
         window.location.href = `${process.env.REACT_APP_BASE_URL_BACKEND}/auth/google`;
     }
