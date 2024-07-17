@@ -8,7 +8,6 @@ router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: `${process.env.APP_URL_FRONTEND}/short-url-blink/error`, session: false }),
     async function (req, res) {
         try{
-            console.log("-Auth")
             res
                 .cookie('jwt', req.user, 
                 { 

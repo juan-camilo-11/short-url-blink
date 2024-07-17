@@ -23,13 +23,6 @@ export async function Post(pathUrl: string, body: any) {
 
 export async function Get(pathUrl: string, options: RequestInit = {}) {
     try {
-        const wait = (duration: number) => {
-            return new Promise(resolve => setTimeout(resolve, duration));
-        };
-
-        // Espera 10 segundos antes de continuar
-        await wait(10000);
-
         const defaultHeaders = {
             'Authorization': `Bearer ${getCookie('jwt')}`,
         };
