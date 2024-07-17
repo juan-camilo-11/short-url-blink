@@ -10,7 +10,14 @@ router.get('/auth/google/callback',
         try{
             console.log("-Auth")
             res
-                .cookie('jwt', req.user, { httpOnly: false,expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), domain: process.env.APP_URL_BACKEND  })
+                .cookie('jwt', req.user, 
+                { 
+                    httpOnly: false,
+                    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), 
+                    domain: process.env.APP_URL_BACKEND ,
+                    secure: true,
+                    sameSite: "none"
+                })
                 .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/auth`);
         }catch(err){
             console.log(err)
