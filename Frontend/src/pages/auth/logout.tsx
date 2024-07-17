@@ -12,6 +12,12 @@ function Logout() {
         }
     }
 
+    const deleteToken = () => {
+        if(sessionStorage.getItem('jwt')){
+            sessionStorage.removeItem('jwt');
+        }
+    }
+
     function logout() {
         fetch(`${process.env.REACT_APP_BASE_URL_BACKEND}/profile/logout`, {
             method: 'GET',
@@ -20,6 +26,7 @@ function Logout() {
             .then(response => {
                 if(response.ok){
                     deleteUser();
+                    deleteToken();
                     window.location.href = '/short-url-blink/'; 
                 }
             })

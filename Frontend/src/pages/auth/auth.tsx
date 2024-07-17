@@ -6,22 +6,25 @@ function Auth() {
         window.location.href = `${process.env.REACT_APP_BASE_URL_BACKEND}/auth/google`;
     }
 
-    function checkJwtCookieExistence(cookieName: string) {
-        try {
-            const cookies = document.cookie.split(';');
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
 
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(cookieName + '=')) {
-                    return true;
-                }
-            }
-            return false;
+        const existingToken = getToken();
+
+        if (token && existingToken === null) {
+            sessionStorage.setItem('jwt', token);
+            console.log('Token almacenado:', token);
         }
-        catch(err){
-            console.log(err)
+
+    }, []);
+
+    const getToken = () =>{
+        const token = sessionStorage.getItem('jwt');
+        if(!token){
+            return null
         }
-        
+        return token
     }
 
     const fetchUser = async () => {
@@ -38,7 +41,7 @@ function Auth() {
 
     useEffect(() => {
         const existingUser = sessionStorage.getItem('user') ? true : false;
-        const existingToken = checkJwtCookieExistence('jwt');
+        const existingToken = getToken();
         if (existingToken && !existingUser) {
             fetchUser();
         }

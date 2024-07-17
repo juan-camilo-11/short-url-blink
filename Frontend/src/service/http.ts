@@ -1,14 +1,17 @@
-const getCookie = (name: string) => {
-    const cookieValue = document.cookie.match(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
-    return cookieValue ? cookieValue.pop() : '';
-};
+const getToken = () =>{
+    const token = sessionStorage.getItem('jwt');
+    if(!token){
+        return null
+    }
+    return token
+}
 
 export async function Post(pathUrl: string, body: any) {
     try {
         const response = await fetch(pathUrl, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${getCookie('jwt')}`,
+                'Authorization': `Bearer ${getToken()}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body),
@@ -24,7 +27,7 @@ export async function Post(pathUrl: string, body: any) {
 export async function Get(pathUrl: string, options: RequestInit = {}) {
     try {
         const defaultHeaders = {
-            'Authorization': `Bearer ${getCookie('jwt')}`,
+            'Authorization': `Bearer ${getToken()}`,
         };
         const headers = {
             ...defaultHeaders,
@@ -45,7 +48,7 @@ export async function Get(pathUrl: string, options: RequestInit = {}) {
 export async function Patch(pathUrl: string, options: RequestInit = {}, body: any) {
     try {
         const defaultHeaders = {
-            'Authorization': `Bearer ${getCookie('jwt')}`,
+            'Authorization': `Bearer ${getToken()}`,
             'Content-Type': 'application/json'
         };
         const headers = {
@@ -68,7 +71,7 @@ export async function Patch(pathUrl: string, options: RequestInit = {}, body: an
 export async function Delete(pathUrl: string, options: RequestInit = {}) {
     try {
         const defaultHeaders = {
-            'Authorization': `Bearer ${getCookie('jwt')}`,
+            'Authorization': `Bearer ${getToken()}`,
             'Content-Type': 'application/json'
         };
         const headers = {
