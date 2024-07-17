@@ -9,7 +9,7 @@ router.get('/auth/google/callback',
     async function (req, res) {
         try{
             console.log("-Auth")
-            res.json({jwt: req.user})
+            res
                 .cookie('jwt', req.user, 
                 { 
                     httpOnly: false
