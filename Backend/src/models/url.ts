@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
 import db from "./db";
-import { connect } from "net";
 
 class Url {
     private googleId: string;
