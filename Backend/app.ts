@@ -25,6 +25,10 @@ async function connectDB() {
 
 connectDB();
 
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hola, este es un GET simple!' });
+});
+
 app.use(passport.initialize());
 
 app.use(authRoutes);
