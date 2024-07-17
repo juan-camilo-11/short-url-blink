@@ -1,24 +1,10 @@
 {
-    "rewrites": [
-      { "source": "/short-url-blink/(.*)", "destination": "/$1" }
-    ],
+    
     "routes": [
       {
         "src": "/short-url-blink/(.*)",
         "dest": "/short-url-blink/$1"
       }
-    ],
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "build"
-        }
-      }
-    ],
-    "devCommand": "npm run dev",
-    "installCommand": "npm install",
-    "outputDirectory": "build"
+    ]
   }
   
