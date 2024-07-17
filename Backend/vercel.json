@@ -9,7 +9,32 @@
         {
             "src": "/api/(.*)",
             "dest": "build/app.js",
-            "methods": ["GET", "POST", "PATCH", "DELETE"]
+            "methods": [
+                "GET",
+                "POST",
+                "PATCH",
+                "DELETE"
+            ]
+        },
+        {
+            "src": "/url/(.*)",
+            "dest": "build/app.js",
+            "methods": [
+                "GET",
+                "POST",
+                "PATCH",
+                "DELETE"
+            ]
+        },
+        {
+            "src": "/profile/(.*)",
+            "dest": "build/app.js",
+            "methods": [
+                "GET",
+                "POST",
+                "PATCH",
+                "DELETE"
+            ]
         }
     ]
 }
