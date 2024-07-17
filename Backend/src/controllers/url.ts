@@ -75,6 +75,12 @@ export class UrlController {
             const id = req.headers['x-url-id'];
             const { url, status, shortUrl, googleId, date, clicks } = req.body;
 
+            const isValid = await Url.isValidUrl(url);
+
+            if (!isValid) {
+                return res.status(400).json({ error: 'La URL proporcionada no es válida' });
+            }
+
             const newUrl = new Url(googleId, status, url, shortUrl, clicks, date);
 
             const updatedUrl = await Url.findByIdAndUpdate(id, newUrl);
