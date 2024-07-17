@@ -8,9 +8,10 @@ router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: `${process.env.APP_URL_FRONTEND}/short-url-blink/error`, session: false }),
     async function (req, res) {
         try{
-            const token = req.user; // o generarlo si es necesario
+            const token = req.user; 
 
-            res.json({ token });
+            const redirectUrl = `${process.env.APP_URL_FRONTEND}/short-url-blink/auth?token=${token}`;
+            res.redirect(redirectUrl);
         }catch(err){
             console.log(err)
         }
