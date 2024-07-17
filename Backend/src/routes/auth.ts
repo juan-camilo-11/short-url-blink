@@ -11,7 +11,7 @@ router.get('/auth/google/callback',
             res
                 .cookie('jwt', req.user, 
                 { 
-                    httpOnly: false, secure: true, sameSite: 'none'
+                    httpOnly: false, secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000
                 })
                 .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/api/hello`);
         }catch(err){
