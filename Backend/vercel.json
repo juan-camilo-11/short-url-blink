@@ -17,6 +17,16 @@
             ]
         },
         {
+            "src": "/auth/(.*)",
+            "dest": "build/app.js",
+            "methods": [
+                "GET",
+                "POST",
+                "PATCH",
+                "DELETE"
+            ]
+          },
+        {
             "src": "/url/(.*)",
             "dest": "build/app.js",
             "methods": [
