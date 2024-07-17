@@ -13,7 +13,7 @@ router.get('/auth/google/callback',
                 { 
                     httpOnly: false
                 })
-                .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/auth`);
+                .redirect(`${process.env.APP_URL_FRONTEND}/short-url-blink/api/hello`);
         }catch(err){
             console.log(err)
         }
