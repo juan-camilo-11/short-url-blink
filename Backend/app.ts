@@ -4,6 +4,7 @@ import passport from 'passport';
 import authRoutes from "./src/routes/auth";
 import userRoutes from "./src/routes/user";
 import urlRoutes from "./src/routes/url";
+import clickRoutes from "./src/routes/click";
 import db from './src/models/db';
 import { corsMiddleware } from "./src/middlewares/cors";
 import { authMiddleware } from "./src/middlewares/auth";
@@ -32,6 +33,8 @@ app.get('/api/hello', (req, res) => {
 app.use(passport.initialize());
 
 app.use(authRoutes);
+
+app.use(clickRoutes);
 
 app.use(userRoutes);
 
