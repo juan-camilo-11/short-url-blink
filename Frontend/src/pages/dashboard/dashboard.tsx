@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./dashboard.css";
 import Modal from '../../components/modal/modal';
 import { Delete, Get, Patch, Post } from '../../service/http';
+import Notification from '../../components/notification/notification';
 
 interface ModalData {
     _id: string;
@@ -11,6 +12,11 @@ interface ModalData {
     date: string;
     status: string;
     clicks: string;
+}
+interface notificationData {
+    title: string;
+    text: string;
+    type: "error" | "info" | "success";
 }
 
 function Dashboard() {
@@ -22,11 +28,17 @@ function Dashboard() {
     const [modalViewDetailing, setModalViewDetailing] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [error, setError] = useState("");
+    const [notification, setNotification] = useState<notificationData | null>(null);
 
     const [modalData, setModalData] = useState<ModalData | null>(null);
 
     const [urlData, setUrlData] = useState<any[]>([]);
+
+    const [showNotification, setShowNotification] = useState(false);
+
+    const handleShowNotification = () => {
+        setShowNotification(true);
+    };
 
     const toggleModalRegister = () => {
         setModalRegister(!modalRegister);
@@ -68,9 +80,20 @@ function Dashboard() {
         if (response === "Exitoso") {
             toggleModalRegister();
             fetchUrls();
+            setNotification({
+                title: "Satisfactorio",
+                text: "Ya puedes usar tu url",
+                type: "success"
+            });
+            handleShowNotification();
         }
         else {
-            setError(response.error)
+            setNotification({
+                title: "Error",
+                text: "Rectifica la url, debe ser valida.",
+                type: "error"
+            });
+            handleShowNotification();
         }
     };
     const handleSubmitDelete = async () => {
@@ -121,9 +144,22 @@ function Dashboard() {
 
         const pathUrl = `${process.env.REACT_APP_BASE_URL_BACKEND}/url`;
         const response = await Patch(pathUrl, options, newUrl);
-        if (response) {
+        if (!response.error) {
             toggleModalEdit();
             fetchUrls();
+            setNotification({
+                title: "Satisfactorio",
+                text: "Ya puedes usar nueva tu url",
+                type: "success"
+            });
+            handleShowNotification();
+        }else{
+            setNotification({
+                title: "Error",
+                text: "Rectifica la data,la url debe ser valida.",
+                type: "error"
+            });
+            handleShowNotification();
         }
     };
 
@@ -143,14 +179,9 @@ function Dashboard() {
         }
     };
 
-    useEffect(() => {
-        if (error !== "") {
-            alert(error)
-        }
-    }, [error])
-
     return (
         <section id='dashboard' className='h-full w-full grid place-items-center'>
+
             {urlData.length === 0 ?
                 <div>
                     <div onClick={toggleModalRegister} className='p-10 bg-neutral-300 rounded-full inline-block hover:bg-neutral-400 transition-all dark:bg-neutral-700  dark:hover:bg-neutral-600'>
@@ -241,7 +272,7 @@ function Dashboard() {
                         {modalData ? (
                             <div className='dark:text-white p-2'>
                                 <h3>Url: <span className='text-gray-600 dark:text-gray-400'>{modalData.url}</span></h3>
-                                <p>shortUrl: <span className='text-gray-600 dark:text-gray-400'>{modalData.shortUrl}</span></p>
+                                <p>shortUrl: <span className='text-gray-600 dark:text-gray-400'>{process.env.REACT_APP_BASE_URL}/{modalData.shortUrl}</span></p>
                                 <p>date: <span className='text-gray-600 dark:text-gray-400'>{modalData.date}</span></p>
                                 <p>estado: <span className='text-gray-600 dark:text-gray-400'>{modalData.status}</span></p>
                                 <p>clicks: <span className='text-gray-600 dark:text-gray-400'>{modalData.clicks}</span></p>
@@ -252,7 +283,6 @@ function Dashboard() {
                     </div>
                 </Modal>
             )}
-
             {modalEdit && (
                 <Modal toggleModal={toggleModalEdit} textButton="Cerrar" title="Editar">
                     <form onSubmit={handleSubmitEdit} className='flex flex-col gap-3'>
@@ -270,6 +300,16 @@ function Dashboard() {
                         </div>
                     </form>
                 </Modal>
+            )}
+
+            {showNotification && notification && (
+                <Notification
+                    title={notification.title}
+                    text={notification.text}
+                    type={notification.type}
+                    onClose={() => setShowNotification(false)}
+                    show={showNotification}
+                />
             )}
         </section>
     );
