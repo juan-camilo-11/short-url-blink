@@ -70,6 +70,28 @@ class Url {
         }
     }
 
+    static async addClick(shortUrl: string) {
+        const client = db.getClient();
+        const database = client.db("db");
+        const collection = database.collection("urls");
+    
+        try {
+            const result = await collection.updateOne(
+                { shortUrl },
+                { $inc: { clicks: 1 } }
+            );
+    
+            if (result.modifiedCount === 1) {
+                return "Incremento exitoso";
+            } else {
+                return "No se encontró el documento";
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+    
+
     static async deleteById(id: string) {
         const client = db.getClient();
         const database = client.db("db");

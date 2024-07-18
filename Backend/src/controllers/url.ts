@@ -29,6 +29,21 @@ export class UrlController {
         }
 
     }
+    static async registerClick(req, res) {
+        try {
+            const { shortUrl } = req.body;
+
+            if (!shortUrl) {
+                return res.status(400).json({ error: 'Faltas datos en la peticion' });
+            }
+
+            const result = await Url.addClick(shortUrl);
+
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
     static async createUrl(req, res) {
         try {
             const { googleId, url } = req.body;
