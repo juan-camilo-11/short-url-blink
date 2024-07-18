@@ -5,8 +5,6 @@ const router = Router();
 
 router.get('/url', UrlController.getUrls);
 
-router.get('/url/:id', UrlController.getUrlById);
-
 router.post('/url', UrlController.createUrl);
 
 router.delete('/url', UrlController.deleteUrl);
