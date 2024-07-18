@@ -5,8 +5,6 @@ const router = Router();
 
 router.get('/url', UrlController.getUrls);
 
-router.post('/click', UrlController.registerClick);
-
 router.get('/url/:id', UrlController.getUrlById);
 
 router.post('/url', UrlController.createUrl);
